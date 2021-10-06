@@ -1,9 +1,7 @@
 import React from 'react'
 
 const Sidebar = () => {
-    return (
-        <div>SideBar</div>
-            
+    return ( <nav className='w-72 bg-red-400'>SideBar</nav>     
     )
 }
 

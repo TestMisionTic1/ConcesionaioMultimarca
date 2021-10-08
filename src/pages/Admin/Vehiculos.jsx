@@ -2,43 +2,52 @@ import React, { useEffect, useState } from 'react'
 
 const Vehiculos = () => {
 
-    const [nombreVehiculo, setNombreVehiclo] = useState('Valor inicial');
+    const [edad, setEdad] = useState(0);
+    const [esMenorEdad, setesMenorEdad] = useState(false);
+    const [mostrarCamposAdicionales, setmostrarCamposAdicionales] = useState(false)
 
     useEffect(() => {
-        console.log("Hola , Soy un Effect que se ejecuta una vez cuando la pagian se renderiza,pq tiene el array de dependencias vacio "
-        );
+        if (edad >= 18) {
+            setesMenorEdad(false);
+        } else {
+            setesMenorEdad(true);
+        }
 
-    }, []);
-
-    useEffect(() => {
-        console.log("Esta es una funcion que se jejecuta cada que cmabia el valor de nombre Vehiculo")
-        console.log("El valor de la variable es" , nombreVehiculo)
-    },[nombreVehiculo]);
-
-    const enviarDatosAlBackEnd =() =>{
-        console.log('El Valor de la variables nombreVehiculo es ', nombreVehiculo)        
-    }
+    }, [edad])
 
 
 
 
     return (
         <form className='flex flex-col'>
-            <h4>Formulario de Creacion de Vehiculos</h4>
-            <input onChange={(e) => {
-                setNombreVehiclo(e.target.value);
-            }}
-                value={nombreVehiculo}
-                type="text"
-                placeholder='Nombre del Vehiculo' />
-            <input onChange={(e) => {
-                console.log('Marca: ', e.target.value);
-            }}
-                type="text"
-                placeholder='Marca del Vehiculo' />
-            <input type="text" placeholder='Modelo del Vehiculo' />
-            <button type='button' onClick={enviarDatosAlBackEnd} className='bg-indigo-500 text-white'>Enviar Datos</button>
+            <h2>Formulario de Creacion de Vehiculos</h2>
+            <label htmlFor="edad">
+                Por favor ingrese su edad
+            </label>
+            <input value={edad} onChange={(e) => { setEdad(e.target.value) }} className='boder border-gray-600' name='edad' type="number" />
+            {esMenorEdad ? (
+                <span className='text-3xl text-red-500'>
+                    !Usted es menor de edad, no puede hacer pagos!</span>
 
+            ) : (
+                <span className='text-3xl text-green-500'>!Usted es mayor de edad, si puede hacer pagos!</span>
+            )}
+            <button 
+            type='button' 
+            onClick={() => setmostrarCamposAdicionales(!mostrarCamposAdicionales)}
+             className='text-white bg-indigo-500'>
+                 Mostrar campos adicionales</button>
+
+            {mostrarCamposAdicionales &&
+                <div>
+                    <input className='border bg-gray-400 my-2 p-3' placeholder='Dato Nuevo' type="text" />
+                    <input className='border bg-gray-400 my-2 p-3' placeholder='Dato Nuevo' type="text" />
+                    <input className='border bg-gray-400 my-2 p-3' placeholder='Dato Nuevo' type="text" />
+                    <input className='border bg-gray-400 my-2 p-3' placeholder='Dato Nuevo' type="text" />
+                    <input className='border bg-gray-400 my-2 p-3' placeholder='Dato Nuevo' type="text" />
+                </div>
+            
+            }
         </form>
     )
 }

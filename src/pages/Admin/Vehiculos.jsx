@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 const Vehiculos = () => {
 
-    const [nombreVehiculo, setNombreVehiclo] = useState('');
+    const [nombreVehiculo, setNombreVehiclo] = useState('Valor inicial');
 
     useEffect(() => {
         console.log("Hola , Soy un Effect que se ejecuta una vez cuando la pagian se renderiza,pq tiene el array de dependencias vacio "
@@ -28,6 +28,7 @@ const Vehiculos = () => {
             <input onChange={(e) => {
                 setNombreVehiclo(e.target.value);
             }}
+                value={nombreVehiculo}
                 type="text"
                 placeholder='Nombre del Vehiculo' />
             <input onChange={(e) => {

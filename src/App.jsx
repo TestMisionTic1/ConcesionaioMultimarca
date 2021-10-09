@@ -5,7 +5,7 @@ import PublicLayout from 'layouts/PublicLayout';
 import Index from 'pages/Index';
 import Admin from 'pages/Admin/Index';
 import Resgistro from 'pages/Resgistro';
-import Login from 'pages/Login';
+import Login from 'pages/auth/Login';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'styles/styles.css';
 import AuthLayout from 'layouts/AuthLayout';

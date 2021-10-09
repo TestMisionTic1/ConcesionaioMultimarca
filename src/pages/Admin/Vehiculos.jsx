@@ -107,10 +107,10 @@ const FormularioCreacionVehiculos = () => {
         <div className='flex flex-col  items-center justify-center'>
             <h2 className='text-2xl font-extrabold text-gray-800 '>Crear Nuevo Vehiculo</h2>
             <form className='grid grid-cols-2'>
-                <input className=' bg-gray-50 border-gray-600 p-2 rounded-lg m-2 ' type="text" />
-                <input className=' bg-gray-50 border-gray-600 p-2 rounded-lg m-2 ' type="text" />
-                <input className=' bg-gray-50 border-gray-600 p-2 rounded-lg m-2 ' type="text" />
-                <input className=' bg-gray-50 border-gray-600 p-2 rounded-lg m-2 ' type="text" />
+                <input className=' bg-gray-50 border-gray-600 p-2 rounded-lg m-2 border  ' type="text" />
+                <input className=' bg-gray-50 border-gray-600 p-2 rounded-lg m-2 border ' type="text" />
+                <input className=' bg-gray-50 border-gray-600 p-2 rounded-lg m-2 border ' type="text" />
+                <input className=' bg-gray-50 border-gray-600 p-2 rounded-lg m-2 border ' type="text" />
                 <button className='col-span-2 bg-green-400 p-2 rounded-full shadow-md hover:bg-green-600 text-white'>Guardar vehiculo</button>
             </form>
         </div>

@@ -1,6 +1,8 @@
 import { nanoid } from "nanoid";
 import React, { useEffect, useState, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { Tooltip } from "@material-ui/core";
+import { Dialog } from "@material-ui/core";
 import "react-toastify/dist/ReactToastify.css";
 
 const vehiculosBackEnd = [
@@ -123,6 +125,7 @@ const TablaVehiculos = ({ listaVehiculos }) => {
 
 const FilaVehiculo = ({ vehiculo }) => {
   const [edit, setedit] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const [infoNuevoVehiculo, setInfoNuevoVehiculo] = useState({
     nombre: vehiculo.nombre,
     marca: vehiculo.marca,
@@ -187,18 +190,52 @@ const FilaVehiculo = ({ vehiculo }) => {
       <td>
         <div className='flex w-full justify-around'>
           {edit ? (
-            <i
-              onClick={() => actualizarVehiculo()}
-              className='fas fa-check text-green-700 hover:text-green-500'
-            />
+            <>
+              <Tooltip title='Confirmar Edicion' arrow>
+                <i
+                  onClick={() => actualizarVehiculo()}
+                  className='fas fa-check text-green-700 hover:text-green-500'
+                />
+              </Tooltip>
+              <Tooltip title='Cancelar Edicion' arrow>
+                <i className='fas fa-ban text-red-700 hover:text-red-500' />
+              </Tooltip>
+            </>
           ) : (
-            <i
-              onClick={() => setedit(!edit)}
-              className='fas fa-pencil-alt text-yellow-700 hover:text-yellow-500'
-            />
+            <>
+              <Tooltip title='Editar Vehiculo' arrow>
+                <i
+                  onClick={() => setedit(!edit)}
+                  className='fas fa-pencil-alt text-yellow-700 hover:text-yellow-500'
+                />
+              </Tooltip>
+              <Tooltip title='Eliminar Vehiculo' arrow placement='bottom'>
+                <i
+                  onClick={() => setOpenDialog(true)}
+                  className='fas fa-trash text-red-700 hover:text-red-500'
+                />
+              </Tooltip>
+            </>
           )}
-          <i className='fas fa-trash text-red-700 hover:text-red-500' />
         </div>
+        <Dialog open={openDialog}>
+          <div className='p-8 flex flex-col'>
+            <h1 className='text-gray-900 text-2xl font-bold'>
+              Esta Seguro de querer eliminar el Vehiculo?
+            </h1>
+            <div className='flex w-full items-center justify-center my-4'>
+              <button className='mx-2 px-4 py-2 bg-green-500 text-white hover:bg-green-700 rounded-md shadow-md'>
+                Si
+              </button>
+              <button
+                onClick={() => setOpenDialog(false)}
+                className='mx-2 px-4 py-2 bg-red-500 text-white hover:bg-red-700 rounded-md shadow-md'
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </Dialog>
       </td>
     </tr>
   );

@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import React, { useEffect, useState, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -61,7 +62,7 @@ const Vehiculos = () => {
 
   return (
     <div className='flex h-full w-full flex-col items-center justify-start p-8'>
-      <div className='flex flex-col '>
+      <div className='flex flex-col w-full '>
         <h2 className='text-3xl font-extrabold text-gray-900'>
           Pagina Administracion de Vehiculos
         </h2>
@@ -95,32 +96,111 @@ const TablaVehiculos = ({ listaVehiculos }) => {
       listaVehiculos
     );
   }, [listaVehiculos]);
+
   return (
-    <div className='flex flex-col items-center justify-center'>
+    <div className='flex flex-col items-center justify-center w-full'>
       <h2 className='text-2xl font-extrabold text-gray-800 '>
         Todos Los Vehiculos
       </h2>
-      <table>
-        <thead>
+      <table className='tabla'>
+        <thead className=''>
           <tr>
             <th>Nombre del Vehiculo</th>
             <th>Marca del Vehiculo</th>
             <th>Modelo del Vehiculo</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
           {listaVehiculos.map((vehiculo) => {
-            return (
-              <tr>
-                <td>{vehiculo.nombre}</td>
-                <td>{vehiculo.marca}</td>
-                <td>{vehiculo.modelo}</td>
-              </tr>
-            );
+            return <FilaVehiculo key={nanoid()} vehiculo={vehiculo} />;
           })}
         </tbody>
       </table>
     </div>
+  );
+};
+
+const FilaVehiculo = ({ vehiculo }) => {
+  const [edit, setedit] = useState(false);
+  const [infoNuevoVehiculo, setInfoNuevoVehiculo] = useState({
+    nombre: vehiculo.nombre,
+    marca: vehiculo.marca,
+    modelo: vehiculo.modelo,
+  });
+
+  const actualizarVehiculo = () => {
+    console.log(infoNuevoVehiculo);
+  };
+
+  return (
+    <tr>
+      {edit ? (
+        <>
+          <td>
+            <input
+              className='bg-gray-50 border-gray-600 p-2 rounded-lg m-2 border'
+              type='text'
+              value={infoNuevoVehiculo.nombre}
+              onChange={(e) =>
+                setInfoNuevoVehiculo({
+                  ...infoNuevoVehiculo,
+                  nombre: e.target.value,
+                })
+              }
+            />
+          </td>
+          <td>
+            <input
+              className='bg-gray-50 border-gray-600 p-2 rounded-lg m-2 border'
+              type='text'
+              value={infoNuevoVehiculo.marca}
+              onChange={(e) =>
+                setInfoNuevoVehiculo({
+                  ...infoNuevoVehiculo,
+                  marca: e.target.value,
+                })
+              }
+            />
+          </td>
+          <td>
+            <input
+              className='bg-gray-50 border-gray-600 p-2 rounded-lg m-2 border'
+              type='text'
+              value={infoNuevoVehiculo.modelo}
+              onChange={(e) =>
+                setInfoNuevoVehiculo({
+                  ...infoNuevoVehiculo,
+                  modelo: e.target.value,
+                })
+              }
+            />
+          </td>
+        </>
+      ) : (
+        <>
+          <td>{vehiculo.nombre}</td>
+          <td>{vehiculo.marca}</td>
+          <td>{vehiculo.modelo}</td>
+        </>
+      )}
+      <td>
+        <div className='flex w-full justify-around'>
+          {edit ? (
+            <i
+              onClick={() => actualizarVehiculo()}
+              className='fas fa-check text-green-700 hover:text-green-500'
+            />
+          ) : (
+            <i
+              onClick={() => setedit(!edit)}
+              className='fas fa-pencil-alt text-yellow-700 hover:text-yellow-500'
+            />
+          )}
+          <i className='fas fa-trash text-red-700 hover:text-red-500' />
+        </div>
+      </td>
+    </tr>
   );
 };
 const FormularioCreacionVehiculos = ({

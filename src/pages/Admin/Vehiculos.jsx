@@ -14,7 +14,7 @@ const vehiculosBackEnd = [
 
   {
     nombre: "Sandero",
-    marca: "Reanult",
+    marca: "Renault",
     modelo: 2014,
   },
 
@@ -92,33 +92,61 @@ const Vehiculos = () => {
 };
 
 const TablaVehiculos = ({ listaVehiculos }) => {
+  const [busqueda, setBusqueda] = useState("");
+  const [vehiculosFiltrados, setVehiculosFiltrados] = useState(listaVehiculos);
+
   useEffect(() => {
-    console.log(
-      "este es el listado de vehiculos en el componente de tabla",
-      listaVehiculos
+    console.log("busqueda", busqueda);
+    console.log("lista original", listaVehiculos);
+    setVehiculosFiltrados(
+      listaVehiculos.filter((elemento) => {
+        console.log("elemento", elemento);
+        return JSON.stringify(elemento)
+          .toLowerCase()
+          .includes(busqueda.toLowerCase());
+      })
     );
-  }, [listaVehiculos]);
+  }, [busqueda, listaVehiculos]);
 
   return (
-    <div className='flex flex-col items-center justify-center w-full'>
+    <div className='flex flex-col items-center justify-center w-full '>
+      <input
+        value={busqueda}
+        onChange={(e) => setBusqueda(e.target.value)}
+        placeholder='Buscar'
+        className='border-2 border-gray-700 px-3 py-1 self-start rounded-md focus:outline-none focus:border-indigo-500 '
+      />
       <h2 className='text-2xl font-extrabold text-gray-800 '>
         Todos Los Vehiculos
       </h2>
-      <table className='tabla'>
-        <thead className=''>
-          <tr>
-            <th>Nombre del Vehiculo</th>
-            <th>Marca del Vehiculo</th>
-            <th>Modelo del Vehiculo</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {listaVehiculos.map((vehiculo) => {
-            return <FilaVehiculo key={nanoid()} vehiculo={vehiculo} />;
-          })}
-        </tbody>
-      </table>
+      <div className='hidden md:flex w-full'>
+        <table className='tabla '>
+          <thead className=''>
+            <tr>
+              <th>Nombre del Vehiculo</th>
+              <th>Marca del Vehiculo</th>
+              <th>Modelo del Vehiculo</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {vehiculosFiltrados.map((vehiculo) => {
+              return <FilaVehiculo key={nanoid()} vehiculo={vehiculo} />;
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div className='flex flex-col w-full m-2 md:hidden'>
+        {vehiculosFiltrados.map((el) => {
+          return (
+            <div className='bg-gray-400 m-2 shadow-xl flex flex-col p-2 rounded-xl'>
+              <span>{el.nombre}</span>
+              <span>{el.marca}</span>
+              <span>{el.modelo}</span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
@@ -142,7 +170,7 @@ const FilaVehiculo = ({ vehiculo }) => {
         <>
           <td>
             <input
-              className='bg-gray-50 border-gray-600 p-2 rounded-lg m-2 border'
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 '
               type='text'
               value={infoNuevoVehiculo.nombre}
               onChange={(e) =>
